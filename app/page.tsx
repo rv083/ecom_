@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <section className="luxury-container py-20">
+      {/* <section className="luxury-container py-20">
         <SectionHeader eyebrow="Curated edits" title="Featured Categories" />
         <div className="grid gap-5 md:grid-cols-4">
           {categories.map((category) => (
@@ -40,7 +40,7 @@ export default function HomePage() {
             </a>
           ))}
         </div>
-      </section>
+      </section> */}
       <section className="bg-mist/70 py-20">
         <div className="luxury-container">
           <SectionHeader
