@@ -34,9 +34,9 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     id: "ivory-silk-kurti",
-    name: "Ivory Silk Kurti",
+    name: "Soft Summer Ice Blue Kurta Set",
     description:
-      "A pearl-toned kurti with a clean neckline, relaxed fall, and soft gold detailing for understated occasions.",
+      "Elegant ice blue cotton kurta set with delicate white floral prints, tassel neckline detailing, and straight-fit pants. A perfect blend of comfort, grace, and everyday elegance.",
     fabric: "Silk blend with satin finish",
     price: 4890,
     discountPrice: 4190,
@@ -50,9 +50,9 @@ export const products: Product[] = [
     ],
     category: "Kurtis",
     images: [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1622122201714-77da0ca8e5d2?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1594739033447-80ab21e24b67?auto=format&fit=crop&w=1200&q=80"
+      "/pics/1000156552.jpg",
+      "/pics/1000156555.jpg",
+      "/pics/1000156558.jpg"
     ],
     featured: true,
     popular: true,
@@ -60,9 +60,9 @@ export const products: Product[] = [
   },
   {
     id: "forest-zari-set",
-    name: "Forest Zari Co-ord",
+    name: "Minimalist Mocha Brown Straight Fit Kurta Set",
     description:
-      "Deep green festive co-ord with subtle zari accents and a structured yet feminine silhouette.",
+      "Elegant mocha brown straight-fit kurta with intricate white ethnic prints and a minimal silhouette, paired with subtle contrast bottoms for a timeless and graceful everyday look.",
     fabric: "Viscose silk with zari threadwork",
     price: 6890,
     discountPrice: 5990,
@@ -76,9 +76,9 @@ export const products: Product[] = [
     ],
     category: "Festive Wear",
     images: [
-      "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?auto=format&fit=crop&w=1200&q=80"
+      "/pics/1000156564.jpg",
+      "/pics/1000156573.jpg",
+      "/pics/1000156567.jpg"
     ],
     featured: true,
     popular: true,
@@ -86,9 +86,9 @@ export const products: Product[] = [
   },
   {
     id: "champagne-everyday-kurta",
-    name: "Champagne Everyday Kurta",
+    name: "Lime Grace Set",
     description:
-      "A breathable champagne kurta designed for repeat wear, gentle movement, and refined daily styling.",
+      "Chic lime green sleeveless kurta set with elegant white ethnic motifs and delicate neckline detailing, offering a fresh, modern, and effortlessly graceful look.",
     fabric: "Cotton modal",
     price: 3290,
     stock: 22,
@@ -101,8 +101,9 @@ export const products: Product[] = [
     ],
     category: "Daily Wear",
     images: [
-      "https://images.unsplash.com/photo-1622122201714-77da0ca8e5d2?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1594739033447-80ab21e24b67?auto=format&fit=crop&w=1200&q=80"
+      "/pics/IMG_8472.png",
+      "/pics/IMG_8471.png",
+      "/pics/IMG_8469.png"
     ],
     featured: true,
     popular: false,
@@ -110,7 +111,7 @@ export const products: Product[] = [
   },
   {
     id: "pearl-embroidered-anarkali",
-    name: "Pearl Embroidered Anarkali",
+    name: "Ice Blue Pearl Set",
     description:
       "A premium anarkali with pearl embroidery, soft flare, and an heirloom mood made modern.",
     fabric: "Chanderi silk blend",
@@ -126,8 +127,8 @@ export const products: Product[] = [
     ],
     category: "Premium Collection",
     images: [
-      "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80"
+      "/pics/1000156552.jpg",
+      "/pics/1000156555.jpg"
     ],
     featured: true,
     popular: true,
@@ -159,9 +160,9 @@ export const products: Product[] = [
   },
   {
     id: "soft-gold-festive-kurta",
-    name: "Soft Gold Festive Kurta",
+    name: "Elegant Sage Green Flared Kurta Set",
     description:
-      "A luminous festive kurta with tone-on-tone embroidery and an airy satin-inspired sheen.",
+      "Graceful sage green flared kurta set with delicate white embroidery and soft gathers, designed for an elegant and effortlessly stylish look. Perfect for festive wear and special occasions.",
     fabric: "Organza silk blend",
     price: 7190,
     discountPrice: 6590,
@@ -175,8 +176,10 @@ export const products: Product[] = [
     ],
     category: "Festive Wear",
     images: [
-      "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1200&q=80"
+      "/pics/IMG_8473.png",
+      "/pics/IMG_8474.png",
+      "/pics/IMG_8476.png",
+      "/pics/IMG_8477.png"
     ],
     featured: false,
     popular: true,

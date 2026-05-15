@@ -17,9 +17,12 @@ export function Hero() {
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-gold">
             Sleek. Simple. Aureva.
           </p>
-          <h1 className="max-w-3xl font-serif text-6xl leading-[0.95] text-forest md:text-8xl">
-            AURÉVA
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="max-w-3xl font-serif text-6xl leading-[0.95] text-forest md:text-8xl">
+              AURÉVA
+            </h1>
+            <p className="text-2xl font-medium text-forest tracking-[0.07em] mt-1">fashion</p>
+          </div>
           <p className="mt-6 max-w-xl text-lg leading-8 text-moss">
             Premium women&apos;s ethnic wear shaped by silk-like textures, ivory calm,
             and modern feminine ease.
@@ -41,16 +44,16 @@ export function Hero() {
         >
           <div className="absolute right-0 top-0 h-[86%] w-[74%] overflow-hidden rounded-[2rem] shadow-luxury">
             <img
-              src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=85"
+              src="/pics/IMG-20260512-WA0295.jpg"
               alt="Aureva ivory ethnic wear"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-top"
             />
           </div>
           <div className="absolute bottom-0 left-0 h-[48%] w-[52%] overflow-hidden rounded-[1.5rem] border-8 border-pearl shadow-silk">
             <img
-              src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1000&q=85"
+              src="/pics/pic_1.jpeg"
               alt="Aureva festive silk detail"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-top"
             />
           </div>
         </motion.div>

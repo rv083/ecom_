@@ -34,8 +34,9 @@ export function Navbar() {
       }`}
     >
       <nav className="luxury-container flex h-20 items-center justify-between">
-        <Link href="/" className="font-serif text-3xl tracking-[0.16em] text-forest">
-          AUREVA
+        <Link href="/" className="flex flex-col">
+          <span className="font-serif text-3xl tracking-[0.16em] text-forest">AURÉVA</span>
+          <span className="text-sm font-medium text-forest tracking-[0.07em]">fashion</span>
         </Link>
         <div className="hidden items-center gap-9 md:flex">
           {links.map((link) => (
@@ -80,8 +81,9 @@ export function Navbar() {
       {menuOpen ? (
         <div className="fixed inset-0 z-50 bg-pearl/96 p-6 backdrop-blur-xl md:hidden">
           <div className="flex items-center justify-between">
-            <Link href="/" className="font-serif text-3xl tracking-[0.16em]">
-              AUREVA
+            <Link href="/" className="flex flex-col">
+              <span className="font-serif text-3xl tracking-[0.16em]">AUREVA</span>
+              <span className="text-sm font-medium text-forest tracking-[0.1em]">fashion</span>
             </Link>
             <button aria-label="Close menu" onClick={() => setMenuOpen(false)}>
               <X />
