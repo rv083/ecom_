@@ -1,7 +1,7 @@
 export type ProductSize = "M" | "L" | "XL" | "XXL";
 
 export type ProductCategory =
-  | "Kurtis"
+  | "Work Wear"
   | "Festive Wear"
   | "Daily Wear"
   | "Premium Collection";

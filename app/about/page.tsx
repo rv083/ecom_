@@ -6,7 +6,7 @@ export default function AboutPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.32em] text-gold">
             About Aureva
           </p>
-          <h1 className="mt-4 font-serif text-6xl leading-none">Sleek. Simple. Auréva.</h1>
+          <h1 className="mt-4 font-serif text-6xl leading-none">Enchanting. Elegant. Exquisite.</h1>
           <p className="mt-6 text-lg leading-8 text-moss">
             AUREVA is a premium ethnic wear concept shaped around restrained beauty:
             ivory calm, champagne softness, forest green confidence, and pieces that feel

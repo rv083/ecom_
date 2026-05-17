@@ -15,7 +15,7 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-gold">
-            Sleek. Simple. Aureva.
+            Exquisite. Elegant. Enchanting.
           </p>
           <div className="flex flex-col">
             <h1 className="max-w-3xl font-serif text-6xl leading-[0.95] text-forest md:text-8xl">
@@ -24,8 +24,7 @@ export function Hero() {
             <p className="text-2xl font-medium text-forest tracking-[0.07em] mt-1">fashion</p>
           </div>
           <p className="mt-6 max-w-xl text-lg leading-8 text-moss">
-            Premium women&apos;s ethnic wear shaped by silk-like textures, ivory calm,
-            and modern feminine ease.
+            A contemporary ethnic and Indo-western fashion brand offering elegant, comfort-driven apparel in breathable fabrics like cotton, Kota doriya and Mal cotton, blending traditional Indian craftsmanship with modern style.
           </p>
           <div className="mt-9 flex flex-wrap gap-4">
             <Button href="/shop">
