@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface ImageCarouselProps {
   images: string[];
@@ -11,14 +11,47 @@ interface ImageCarouselProps {
 
 export function ImageCarousel({ images, alt, aspect = "aspect-[4/5]" }: ImageCarouselProps) {
   const [index, setIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const current = images[index];
 
   const move = (direction: number) => {
     setIndex((value) => (value + direction + images.length) % images.length);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const swipeThreshold = 50;
+
+    if (Math.abs(distance) > swipeThreshold) {
+      if (distance > 0) {
+        move(1);
+      } else {
+        move(-1);
+      }
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   return (
-    <div className={`group relative overflow-hidden rounded-2xl bg-champagne/30 ${aspect}`}>
+    <div
+      ref={containerRef}
+      className={`group relative overflow-hidden rounded-2xl bg-champagne/30 ${aspect}`}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <img
         src={current}
         alt={alt}

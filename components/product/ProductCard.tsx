@@ -27,7 +27,7 @@ export function ProductCard({ product }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.55 }}
-      className="group"
+      className="group flex h-full flex-col"
     >
       <Link href={`/products/${product.id}`} className="block">
         <div className="relative">
@@ -46,11 +46,11 @@ export function ProductCard({ product }: ProductCardProps) {
           </button>
         </div>
       </Link>
-      <div className="pt-4">
+      <div className="flex flex-1 flex-col justify-between pt-4">
         <div className="flex items-start justify-between gap-3">
-          <div>
+          <div className="flex-1">
             <Link href={`/products/${product.id}`}>
-              <h3 className="font-serif text-2xl text-forest transition group-hover:text-gold">
+              <h3 className="line-clamp-2 font-serif text-2xl text-forest transition group-hover:text-gold">
                 {product.name}
               </h3>
             </Link>
@@ -70,7 +70,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <span className="text-moss/60 line-through">{formatCurrency(product.price)}</span>
           ) : null}
         </div>
-        <div className="mt-3 flex gap-2 text-xs text-moss">
+        <div className="mt-3 flex flex-wrap gap-2 text-xs text-moss">
           {product.sizes.map((size) => (
             <span key={size} className="rounded-full border border-forest/10 px-2 py-1">
               {size}

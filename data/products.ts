@@ -2,8 +2,8 @@ import type { Category, Product } from "@/types/product";
 
 export const categories: Category[] = [
   {
-    id: "kurtis",
-    name: "Kurtis",
+    id: "work wear",
+    name: "Work Wear",
     description: "Fluid everyday silhouettes in refined fabrics.",
     image:
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1100&q=80"
@@ -48,7 +48,7 @@ export const products: Product[] = [
       { size: "XL", stock: 4 },
       { size: "XXL", stock: 3 }
     ],
-    category: "Kurtis",
+    category: "Work Wear",
     images: [
       "/pics/1000156552.jpg",
       "/pics/1000156555.jpg",
@@ -149,7 +149,7 @@ export const products: Product[] = [
       { size: "XL", stock: 0 },
       { size: "XXL", stock: 0 }
     ],
-    category: "Kurtis",
+    category: "Work Wear",
     images: [
       "https://images.unsplash.com/photo-1594739033447-80ab21e24b67?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80"

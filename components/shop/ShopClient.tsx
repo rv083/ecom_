@@ -10,7 +10,7 @@ import type { ProductCategory, ProductSize } from "@/types/product";
 const sizes: Array<ProductSize | "All"> = ["All", "M", "L", "XL", "XXL"];
 const categories: Array<ProductCategory | "All"> = [
   "All",
-  "Kurtis",
+  "Work Wear",
   "Festive Wear",
   "Daily Wear",
   "Premium Collection"
