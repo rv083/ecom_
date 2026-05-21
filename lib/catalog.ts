@@ -1,4 +1,3 @@
-import { products } from "@/data/products";
 import type { Product, ProductCategory, ProductSize } from "@/types/product";
 
 export type SortKey = "newest" | "price-asc" | "price-desc" | "popular";
@@ -11,7 +10,7 @@ export interface ProductFilters {
   sort?: SortKey;
 }
 
-export function filterProducts(filters: ProductFilters): Product[] {
+export function filterProducts(products: Product[], filters: ProductFilters): Product[] {
   const filtered = products.filter((product) => {
     const currentPrice = product.discountPrice ?? product.price;
     const sizeMatch =

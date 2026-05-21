@@ -1,0 +1,258 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { createProduct, updateProduct } from "@/lib/products";
+import { uploadImages } from "@/lib/upload";
+import type { Product, ProductCategory, ProductSize } from "@/types/product";
+
+interface AdminProductFormProps {
+  editProduct?: Product | null;
+  onDone?: () => void;
+}
+
+const categories: ProductCategory[] = [
+  "Work Wear",
+  "Festive Wear",
+  "Daily Wear",
+  "Premium Collection"
+];
+
+const sizeOptions: ProductSize[] = ["XS", "S", "M", "L", "XL", "XXL"];
+
+type SizeStock = Record<ProductSize, string>;
+
+const emptySizeStock = (): SizeStock => ({
+  XS: "",
+  S: "",
+  M: "",
+  L: "",
+  XL: "",
+  XXL: ""
+});
+
+export default function AdminProductForm({ editProduct, onDone }: AdminProductFormProps) {
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: "",
+    discounted_price: "",
+    category: "Daily Wear" as ProductCategory,
+    isactive: true,
+    isfeatured: false
+  });
+  const [selectedSizes, setSelectedSizes] = useState<ProductSize[]>([]);
+  const [sizeStock, setSizeStock] = useState<SizeStock>(emptySizeStock);
+  const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!editProduct) return;
+
+    const nextStock = emptySizeStock();
+    editProduct.sizeInventory.forEach((item) => {
+      nextStock[item.size] = item.stock.toString();
+    });
+
+    setForm({
+      name: editProduct.name,
+      description: editProduct.description,
+      price: editProduct.price.toString(),
+      discounted_price: editProduct.discountPrice?.toString() ?? "",
+      category: editProduct.category,
+      isactive: editProduct.isactive !== false,
+      isfeatured: editProduct.featured
+    });
+    setSelectedSizes(editProduct.sizes);
+    setSizeStock(nextStock);
+  }, [editProduct]);
+
+  const totalStock = useMemo(
+    () =>
+      selectedSizes.reduce(
+        (total, size) => total + Number(sizeStock[size] || 0),
+        0
+      ),
+    [selectedSizes, sizeStock]
+  );
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const value = e.target instanceof HTMLInputElement && e.target.type === "checkbox"
+      ? e.target.checked
+      : e.target.value;
+
+    setForm({ ...form, [e.target.name]: value });
+  };
+
+  const toggleSize = (size: ProductSize) => {
+    setSelectedSizes((current) =>
+      current.includes(size)
+        ? current.filter((item) => item !== size)
+        : [...current, size]
+    );
+  };
+
+  const updateSizeStock = (size: ProductSize, value: string) => {
+    setSizeStock({ ...sizeStock, [size]: value });
+    setSelectedSizes((current) => (current.includes(size) ? current : [...current, size]));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (selectedSizes.length === 0) {
+      alert("Select at least one size");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const sizeInventory = selectedSizes.map((size) => ({
+        size,
+        stock: Number(sizeStock[size] || 0)
+      }));
+
+      let images = editProduct?.images ?? [];
+
+      if (files.length > 0) {
+        images = await uploadImages(files);
+      }
+
+      const payload = {
+        name: form.name,
+        description: form.description,
+        fabric: editProduct?.fabric ?? "Cotton",
+        price: Number(form.price),
+        discounted_price: form.discounted_price ? Number(form.discounted_price) : undefined,
+        category: form.category,
+        stock: totalStock,
+        sizes: selectedSizes,
+        sizeInventory,
+        images,
+        featured: form.isfeatured,
+        popular: editProduct?.popular ?? false,
+        isactive: form.isactive
+      };
+
+      if (editProduct) {
+        await updateProduct(editProduct.id, payload);
+        alert("Product updated");
+      } else {
+        await createProduct(payload);
+        alert("Product added");
+      }
+
+      onDone?.();
+      setForm({
+        name: "",
+        description: "",
+        price: "",
+        discounted_price: "",
+        category: "Daily Wear",
+        isactive: true,
+        isfeatured: false
+      });
+      setSelectedSizes([]);
+      setSizeStock(emptySizeStock());
+      setFiles([]);
+    } catch (err: any) {
+      console.error(err);
+      alert(err?.message ? `Error saving product: ${err.message}` : "Error saving product");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const discount =
+    form.price && form.discounted_price
+      ? Math.round(
+          ((Number(form.price) - Number(form.discounted_price)) / Number(form.price)) * 100
+        )
+      : 0;
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 border p-4 rounded-xl">
+      <h2 className="text-lg font-semibold">
+        {editProduct ? "Edit Product" : "Add Product"}
+      </h2>
+
+      <input name="name" value={form.name} onChange={handleChange} placeholder="Name" className="w-full border p-2 rounded" />
+      <input name="description" value={form.description} onChange={handleChange} placeholder="Description" className="w-full border p-2 rounded" />
+      <input name="price" value={form.price} onChange={handleChange} placeholder="Price" className="w-full border p-2 rounded" />
+      <input name="discounted_price" value={form.discounted_price} onChange={handleChange} placeholder="Discount Price" className="w-full border p-2 rounded" />
+
+      {discount > 0 && <p className="text-green-600">{discount}% discount</p>}
+
+      <select name="category" value={form.category} onChange={handleChange} className="w-full border p-2 rounded">
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+
+      <label className="flex items-center gap-3 border p-3 rounded">
+        <input
+          name="isactive"
+          type="checkbox"
+          checked={form.isactive}
+          onChange={handleChange}
+          className="h-4 w-4"
+        />
+        <span className="font-medium">Active product</span>
+      </label>
+
+      <label className="flex items-center gap-3 border p-3 rounded">
+        <input
+          name="isfeatured"
+          type="checkbox"
+          checked={form.isfeatured}
+          onChange={handleChange}
+          className="h-4 w-4"
+        />
+        <span className="font-medium">Featured product</span>
+      </label>
+
+      <div className="space-y-3">
+        <p className="font-medium">Sizes and stock</p>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {sizeOptions.map((size) => {
+            const selected = selectedSizes.includes(size);
+
+            return (
+              <div key={size} className="flex items-center gap-3 border p-3 rounded">
+                <input
+                  id={`size-${size}`}
+                  type="checkbox"
+                  checked={selected}
+                  onChange={() => toggleSize(size)}
+                  className="h-4 w-4"
+                />
+                <label htmlFor={`size-${size}`} className="w-10 font-medium">
+                  {size}
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={sizeStock[size]}
+                  onChange={(e) => updateSizeStock(size, e.target.value)}
+                  placeholder="Pieces"
+                  className="min-w-0 flex-1 border p-2 rounded"
+                />
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-sm text-gray-600">Total stock: {totalStock}</p>
+      </div>
+
+      <input type="file" multiple onChange={(e) => setFiles(Array.from(e.target.files ?? []))} />
+
+      <button disabled={loading} className="bg-black text-white px-4 py-2 rounded disabled:opacity-60">
+        {loading ? "Saving..." : editProduct ? "Update Product" : "Add Product"}
+      </button>
+    </form>
+  );
+}
