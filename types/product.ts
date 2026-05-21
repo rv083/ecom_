@@ -1,4 +1,4 @@
-export type ProductSize = "M" | "L" | "XL" | "XXL";
+export type ProductSize = "XS" | "S" | "M" | "L" | "XL" | "XXL";
 
 export type ProductCategory =
   | "Work Wear"
@@ -25,6 +25,7 @@ export interface Product {
   images: string[];
   featured: boolean;
   popular: boolean;
+  isactive?: boolean;
   createdAt: string;
 }
 

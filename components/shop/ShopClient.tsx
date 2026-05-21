@@ -1,13 +1,14 @@
 "use client";
 
 import { SlidersHorizontal } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ProductCard } from "@/components/product/ProductCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { filterProducts, type SortKey } from "@/lib/catalog";
-import type { ProductCategory, ProductSize } from "@/types/product";
+import { listProducts } from "@/lib/products";
+import type { Product, ProductCategory, ProductSize } from "@/types/product";
 
-const sizes: Array<ProductSize | "All"> = ["All", "M", "L", "XL", "XXL"];
+const sizes: Array<ProductSize | "All"> = ["All", "XS", "S", "M", "L", "XL", "XXL"];
 const categories: Array<ProductCategory | "All"> = [
   "All",
   "Work Wear",
@@ -17,15 +18,22 @@ const categories: Array<ProductCategory | "All"> = [
 ];
 
 export function ShopClient() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [size, setSize] = useState<ProductSize | "All">("All");
   const [category, setCategory] = useState<ProductCategory | "All">("All");
   const [availability, setAvailability] = useState<"All" | "In stock" | "Out of stock">("All");
   const [maxPrice, setMaxPrice] = useState(10000);
   const [sort, setSort] = useState<SortKey>("newest");
 
+  useEffect(() => {
+    listProducts().then(setProducts).catch((error) => {
+      console.error("Failed to load shop products", error);
+    });
+  }, []);
+
   const visibleProducts = useMemo(
-    () => filterProducts({ size, category, availability, maxPrice, sort }),
-    [size, category, availability, maxPrice, sort]
+    () => filterProducts(products, { size, category, availability, maxPrice, sort }),
+    [products, size, category, availability, maxPrice, sort]
   );
 
   return (

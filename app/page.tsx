@@ -1,9 +1,7 @@
 import { Gem, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { Hero } from "@/components/home/Hero";
-import { ProductCard } from "@/components/product/ProductCard";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { categories, products } from "@/data/products";
 
 const reasons = [
   { icon: Gem, title: "Premium Fabric", copy: "Silk blends, modal cottons, and fluid finishes." },
@@ -13,8 +11,6 @@ const reasons = [
 ];
 
 export default function HomePage() {
-  const featured = products.filter((product) => product.featured).slice(0, 4);
-
   return (
     <>
       <Hero />
@@ -41,20 +37,7 @@ export default function HomePage() {
           ))}
         </div>
       </section> */}
-      <section className="bg-mist/70 py-20">
-        <div className="luxury-container">
-          <SectionHeader
-            eyebrow="Aureva selection"
-            title="Featured Products"
-            copy="Soft textures, refined colors, and shapes made for graceful movement."
-          />
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeaturedProducts />
       <section className="luxury-container py-20">
         <div className="grid gap-5 md:grid-cols-4">
           {reasons.map((reason) => (
