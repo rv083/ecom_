@@ -1,6 +1,6 @@
 "use client";
 
-import { Minus, Plus, ShoppingBag, Zap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingBag, Zap } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
@@ -14,7 +14,10 @@ interface ProductDetailClientProps {
 }
 
 export function ProductDetailClient({ product, related }: ProductDetailClientProps) {
-  const [image, setImage] = useState(product.images[0]);
+  const [index, setIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const [fading, setFading] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
   const [size, setSize] = useState<ProductSize>(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
@@ -25,30 +28,98 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
 
   const addToCart = () => addItem(product, size, quantity);
 
+  const switchImage = (i: number) => {
+    if (i === index) return;
+    setPrevIndex(index);
+    setFading(true);
+    setIndex(i);
+    setTimeout(() => {
+      setPrevIndex(null);
+      setFading(false);
+    }, 600);
+  };
+
   return (
     <div className="luxury-container py-12">
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="grid gap-4 md:grid-cols-[96px_1fr]">
-          <div className="order-2 flex gap-3 overflow-x-auto md:order-1 md:grid md:overflow-visible">
-            {product.images.map((item) => (
+
+          {/* Thumbnails */}
+          <div className="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex md:flex-col md:overflow-visible">
+            {product.images.map((item, i) => (
               <button
                 key={item}
-                onClick={() => setImage(item)}
-                className={`h-24 w-20 shrink-0 overflow-hidden rounded-xl border ${
-                  item === image ? "border-gold" : "border-transparent"
+                onClick={() => switchImage(i)}
+                className={`h-24 w-20 shrink-0 overflow-hidden rounded-xl border-2 transition-all duration-300 ${
+                  i === index ? "border-gold scale-105" : "border-transparent opacity-70 hover:opacity-100"
                 }`}
               >
                 <img src={item} alt={product.name} className="h-full w-full object-cover" />
               </button>
             ))}
           </div>
-          <div className="group order-1 aspect-[4/5] overflow-hidden rounded-[2rem] bg-champagne/30 shadow-luxury md:order-2">
+
+          {/* Main image */}
+          <div
+            className="group order-1 relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-champagne/30 shadow-luxury md:order-2"
+            onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
+            onTouchEnd={(e) => {
+              const delta = touchStart - e.changedTouches[0].clientX;
+              if (Math.abs(delta) > 50)
+                switchImage(
+                  delta > 0
+                    ? (index + 1) % product.images.length
+                    : (index - 1 + product.images.length) % product.images.length
+                );
+            }}
+          >
+            {prevIndex !== null && (
+              <img
+                key={`prev-${prevIndex}`}
+                src={product.images[prevIndex]}
+                alt={product.name}
+                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+              />
+            )}
             <img
-              src={image}
+              key={`curr-${index}`}
+              src={product.images[index]}
               alt={product.name}
-              className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 group-hover:scale-105 transition-transform duration-700 ${
+                fading ? "opacity-0" : "opacity-100"
+              }`}
             />
+
+            {product.images.length > 1 && (
+              <>
+                <button
+                  aria-label="Previous image"
+                  onClick={() => switchImage((index - 1 + product.images.length) % product.images.length)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-pearl/80 shadow-sm opacity-0 transition group-hover:opacity-100"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  aria-label="Next image"
+                  onClick={() => switchImage((index + 1) % product.images.length)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-pearl/80 shadow-sm opacity-0 transition group-hover:opacity-100"
+                >
+                  <ChevronRight size={18} />
+                </button>
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  {product.images.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === index ? "w-6 bg-pearl" : "w-1.5 bg-pearl/55"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
+
         </div>
         <section className="rounded-[2rem] bg-pearl/70 p-6 shadow-sm md:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">
