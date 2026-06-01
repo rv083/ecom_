@@ -6,7 +6,9 @@ interface ProductPageProps {
   params: { id: string };
 }
 
+
 export const dynamic = "force-dynamic";
+export const revalidate = 0; // add this line
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const product = await getProductById(params.id);

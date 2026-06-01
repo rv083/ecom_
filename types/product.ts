@@ -26,6 +26,7 @@ export interface Product {
   featured: boolean;
   popular: boolean;
   isactive?: boolean;
+  isshowcased?: boolean;
   createdAt: string;
 }
 

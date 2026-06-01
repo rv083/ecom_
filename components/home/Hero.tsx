@@ -3,9 +3,15 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+// add this import at the top
+import { HeroScrollStrip } from "./HeroScrollStrip";
+import { BannerSlider } from "./BannerSlider";
+
 
 export function Hero() {
   return (
+  <>
+    <BannerSlider />
     <section className="relative overflow-hidden bg-satin">
       <div className="luxury-container grid min-h-[calc(100vh-80px)] items-center gap-12 py-12 md:grid-cols-[0.95fr_1.05fr]">
         <motion.div
@@ -57,6 +63,10 @@ export function Hero() {
           </div>
         </motion.div>
       </div>
+      <div className="border-t border-forest/8">
+        <HeroScrollStrip />
+      </div>
     </section>
-  );
+  </>
+);
 }

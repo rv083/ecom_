@@ -23,6 +23,7 @@ type ProductDocument = Models.Document & {
   popular?: boolean;
   isfeatured?: boolean | string | number;
   isactive?: boolean | string | number;
+  isshowcased?: boolean;
   createdAt?: string;
 };
 
@@ -41,6 +42,7 @@ export interface ProductPayload {
   featured?: boolean;
   popular?: boolean;
   isactive?: boolean;
+  isshowcased?: boolean;
 }
 
 const fallbackCategory: ProductCategory = "Daily Wear";
@@ -118,6 +120,7 @@ export function normalizeProduct(document: ProductDocument): Product {
       ? undefined
       : Number(document.discountPrice ?? document.discounted_price);
   const isactive = toBoolean(document.isactive, true);
+  
 
   return {
     id: document.$id,
@@ -134,6 +137,7 @@ export function normalizeProduct(document: ProductDocument): Product {
     featured: toBoolean(document.isfeatured ?? document.featured, false),
     popular: toBoolean(document.popular, false),
     isactive,
+    isshowcased: toBoolean(document.isshowcased, false),
     createdAt: document.createdAt ?? document.$createdAt
   };
 }
@@ -153,6 +157,7 @@ export async function listProducts(options: { includeInactive?: boolean } = {}):
 export async function getProductById(id: string): Promise<Product | null> {
   try {
     const document = await databases.getDocument<ProductDocument>(DATABASE_ID, PRODUCTS_ID, id);
+    console.log("images raw:", document.images);
     return toBoolean(document.isactive, true) ? normalizeProduct(document) : null;
   } catch {
     return null;
@@ -178,7 +183,8 @@ function productDocumentPayload(data: ProductPayload, inventoryKey: "sizeInvento
     [inventoryKey]: JSON.stringify(data.sizeInventory),
     images: data.images,
     isactive: data.isactive ?? true,
-    isfeatured: data.featured ?? false
+    isfeatured: data.featured ?? false,
+    isshowcased: data.isshowcased ?? false,
   };
 
   const discountPrice = data.discountPrice ?? data.discounted_price;
@@ -229,4 +235,12 @@ async function updateProductWithInventoryKey(
 
     throw error;
   }
+}
+export async function listShowcasedProducts(): Promise<Product[]> {
+  const response = await databases.listDocuments<ProductDocument>(
+    DATABASE_ID,
+    PRODUCTS_ID,
+    [Query.equal("isshowcased", true), Query.orderDesc("$createdAt")]
+  );
+  return response.documents.map(normalizeProduct);
 }

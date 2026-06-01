@@ -38,7 +38,8 @@ export default function AdminProductForm({ editProduct, onDone }: AdminProductFo
     discounted_price: "",
     category: "Daily Wear" as ProductCategory,
     isactive: true,
-    isfeatured: false
+    isfeatured: false,
+    isshowcased: false
   });
   const [selectedSizes, setSelectedSizes] = useState<ProductSize[]>([]);
   const [sizeStock, setSizeStock] = useState<SizeStock>(emptySizeStock);
@@ -60,7 +61,8 @@ export default function AdminProductForm({ editProduct, onDone }: AdminProductFo
       discounted_price: editProduct.discountPrice?.toString() ?? "",
       category: editProduct.category,
       isactive: editProduct.isactive !== false,
-      isfeatured: editProduct.featured
+      isfeatured: editProduct.featured,
+      isshowcased: editProduct.isshowcased ?? false,  // add this line
     });
     setSelectedSizes(editProduct.sizes);
     setSizeStock(nextStock);
@@ -114,11 +116,15 @@ export default function AdminProductForm({ editProduct, onDone }: AdminProductFo
         stock: Number(sizeStock[size] || 0)
       }));
 
-      let images = editProduct?.images ?? [];
+      // Extract raw file IDs from existing image URLs
+const existingIds = (editProduct?.images ?? []).map((url) => {
+  const match = url.match(/files\/([^/]+)\//);
+  return match ? match[1] : url;
+});
 
-      if (files.length > 0) {
-        images = await uploadImages(files);
-      }
+// Upload new files if any, then merge with existing
+const newIds = files.length > 0 ? await uploadImages(files) : [];
+const images = [...existingIds, ...newIds];
 
       const payload = {
         name: form.name,
@@ -133,7 +139,8 @@ export default function AdminProductForm({ editProduct, onDone }: AdminProductFo
         images,
         featured: form.isfeatured,
         popular: editProduct?.popular ?? false,
-        isactive: form.isactive
+        isactive: form.isactive,
+        isshowcased: form.isshowcased,
       };
 
       if (editProduct) {
@@ -152,7 +159,8 @@ export default function AdminProductForm({ editProduct, onDone }: AdminProductFo
         discounted_price: "",
         category: "Daily Wear",
         isactive: true,
-        isfeatured: false
+        isfeatured: false,
+        isshowcased: false
       });
       setSelectedSizes([]);
       setSizeStock(emptySizeStock());
@@ -214,6 +222,16 @@ export default function AdminProductForm({ editProduct, onDone }: AdminProductFo
         />
         <span className="font-medium">Featured product</span>
       </label>
+      <label className="flex items-center gap-3 border p-3 rounded">
+  <input
+    name="isshowcased"
+    type="checkbox"
+    checked={form.isshowcased}
+    onChange={handleChange}
+    className="h-4 w-4"
+  />
+  <span className="font-medium">Show in hero strip</span>
+</label>
 
       <div className="space-y-3">
         <p className="font-medium">Sizes and stock</p>
