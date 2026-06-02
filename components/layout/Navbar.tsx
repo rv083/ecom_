@@ -4,7 +4,10 @@ import Link from "next/link";
 import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCartCount, useCartStore } from "@/store/cart-store";
-
+import {
+  getWishlistCount,
+  useWishlistStore,
+} from "@/store/wishlist-store";
 const links = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
@@ -20,7 +23,12 @@ export function Navbar() {
   const openCart = useCartStore((state) => state.openCart);
 
   const count = getCartCount(items);
+  const wishlistItems = useWishlistStore(
+  (state) => state.items
+);
 
+const wishlistCount =
+  getWishlistCount(wishlistItems);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18);
 
@@ -71,12 +79,18 @@ export function Navbar() {
               <Search size={19} />
             </button>
 
-            <button
-              aria-label="Wishlist"
-              className="rounded-full p-3 transition hover:bg-forest/5"
-            >
-              <Heart size={19} />
-            </button>
+            <Link
+  href="/wishlist"
+  className="relative rounded-full p-3 transition hover:bg-forest/5"
+>
+  <Heart size={19} />
+
+  {wishlistCount > 0 && (
+    <span className="absolute right-1 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-gold px-1 text-[11px] font-bold text-forest">
+      {wishlistCount}
+    </span>
+  )}
+</Link>
 
             <button
               aria-label="Cart"
