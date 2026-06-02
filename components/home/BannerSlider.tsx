@@ -5,15 +5,39 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // ✏️ Replace these with your real banner image paths later
 const desktopBanners = [
-  { id: 1, image: "/banners/desktop/banner1.jpg" },
-  { id: 2, image: "/banners/desktop/banner2.jpg" },
-  { id: 3, image: "/banners/desktop/banner3.jpg" },
+  {
+    id: 1,
+    image: "/banners/desktop/banner1.jpg",
+    alt: "Aureva new collection",
+  },
+  {
+    id: 2,
+    image: "/banners/desktop/banner2.jpg",
+    alt: "Aureva festive edit",
+  },
+  {
+    id: 3,
+    image: "/banners/desktop/banner3.jpg",
+    alt: "Aureva daily wear",
+  },
 ];
 
 const mobileBanners = [
-  { id: 1, image: "/banners/mobile/banner1.jpg" },
-  { id: 2, image: "/banners/mobile/banner2.jpg" },
-  { id: 3, image: "/banners/mobile/banner3.jpg" },
+  {
+    id: 1,
+    image: "/banners/mobile/banner1.jpg",
+    alt: "Aureva new collection",
+  },
+  {
+    id: 2,
+    image: "/banners/mobile/banner2.jpg",
+    alt: "Aureva festive edit",
+  },
+  {
+    id: 3,
+    image: "/banners/mobile/banner3.jpg",
+    alt: "Aureva daily wear",
+  },
 ];
 
 export function BannerSlider() {
