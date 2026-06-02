@@ -4,14 +4,35 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ✏️ Replace these with your real banner image paths later
-const banners = [
-  { id: 1, image: "/banners/banner1.jpg", alt: "Aureva new collection" },
-  { id: 2, image: "/banners/banner2.jpg", alt: "Aureva festive edit" },
-  { id: 3, image: "/banners/banner3.jpg", alt: "Aureva daily wear" },
+const desktopBanners = [
+  { id: 1, image: "/banners/desktop/banner1.jpg" },
+  { id: 2, image: "/banners/desktop/banner2.jpg" },
+  { id: 3, image: "/banners/desktop/banner3.jpg" },
+];
+
+const mobileBanners = [
+  { id: 1, image: "/banners/mobile/banner1.jpg" },
+  { id: 2, image: "/banners/mobile/banner2.jpg" },
+  { id: 3, image: "/banners/mobile/banner3.jpg" },
 ];
 
 export function BannerSlider() {
   const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const banners = isMobile ? mobileBanners : desktopBanners;
+
+  useEffect(() => {
+  const update = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  update();
+
+  window.addEventListener("resize", update);
+
+  return () => window.removeEventListener("resize", update);
+}, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -21,7 +42,20 @@ export function BannerSlider() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/6" }}>
+    <div
+  className="
+    relative
+    w-full
+    overflow-hidden
+    h-[100svh]
+    md:h-auto
+  "
+  style={
+    !isMobile
+      ? { aspectRatio: "16/6" }
+      : undefined
+  }
+>
       <AnimatePresence mode="wait">
         <motion.img
           key={banners[index].id}
