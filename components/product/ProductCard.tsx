@@ -9,6 +9,7 @@ import { useCartStore } from "@/store/cart-store";
 import type { Product, ProductSize } from "@/types/product";
 import { formatCurrency } from "@/utils/format";
 import { ImageCarousel } from "./ImageCarousel";
+import { useWishlistStore } from "@/store/wishlist-store";
 
 interface ProductCardProps {
   product: Product;
@@ -208,11 +209,27 @@ function ProductPreviewModal({ product, onClose }: { product: Product; onClose: 
 
 export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
+
+  const toggleItem = useWishlistStore(
+    (state) => state.toggleItem
+  );
+
+  const isWishlisted = useWishlistStore((state) =>
+    state.items.some((item) => item.id === product.id)
+  );
+
   const [showPreview, setShowPreview] = useState(false);
+
   const currentPrice = product.discountPrice ?? product.price;
+
   const discount = product.discountPrice
-    ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
+    ? Math.round(
+        ((product.price - product.discountPrice) /
+          product.price) *
+          100
+      )
     : 0;
+
   const isOut = product.stock <= 0;
 
   return (
@@ -235,12 +252,22 @@ export function ProductCard({ product }: ProductCardProps) {
               <Eye size={18} />
             </button>
             <button
-              aria-label="Add to wishlist"
-              onClick={(e) => e.preventDefault()}
-              className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-pearl/88 shadow-sm transition hover:text-rose"
-            >
-              <Heart size={18} />
-            </button>
+  aria-label="Add to wishlist"
+  onClick={(e) => {
+    e.preventDefault();
+    toggleItem(product);
+  }}
+  className={`absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full shadow-sm transition ${
+    isWishlisted
+      ? "bg-rose text-white"
+      : "bg-pearl/88 hover:text-rose"
+  }`}
+>
+  <Heart
+    size={18}
+    fill={isWishlisted ? "currentColor" : "none"}
+  />
+</button>
           </div>
         </Link>
         <div className="flex flex-1 flex-col justify-between pt-4">
@@ -276,12 +303,12 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </div>
           <Button
-            className="mt-4 w-full"
-            disabled={isOut}
-            onClick={() => addItem(product, product.sizes[0])}
-          >
-            <ShoppingBag size={16} /> {isOut ? "Unavailable" : "Quick add"}
-          </Button>
+  className="mt-4 w-full"
+  disabled={isOut}
+  onClick={() => setShowPreview(true)}
+>
+  <ShoppingBag size={16} /> Quick Add
+</Button>
         </div>
       </motion.article>
 
