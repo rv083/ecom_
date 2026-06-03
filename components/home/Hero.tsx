@@ -11,7 +11,9 @@ import { BannerSlider } from "./BannerSlider";
 export function Hero() {
   return (
   <>
-    <BannerSlider />
+    <div className="mt-05">
+  <BannerSlider />
+</div>
     <section className="relative overflow-hidden bg-satin">
       <div className="luxury-container grid min-h-[calc(100vh-80px)] items-center gap-12 py-12 md:grid-cols-[0.95fr_1.05fr]">
         <motion.div
