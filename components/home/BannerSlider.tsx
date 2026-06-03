@@ -76,7 +76,7 @@ export function BannerSlider() {
   "
   style={
     !isMobile
-      ? { aspectRatio: "16/6" }
+      ? { aspectRatio: "16/9" }
       : undefined
   }
 >
@@ -89,9 +89,10 @@ export function BannerSlider() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
       </AnimatePresence>
+  <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/30 to-transparent z-10 pointer-events-none" />
 
       {/* Dot indicators */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
@@ -106,5 +107,6 @@ export function BannerSlider() {
         ))}
       </div>
     </div>
+    
   );
 }
