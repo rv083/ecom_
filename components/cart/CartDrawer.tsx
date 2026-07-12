@@ -8,7 +8,7 @@ import { getCartSubtotal, useCartStore } from "@/store/cart-store";
 import { formatCurrency } from "@/utils/format";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, increase, decrease, removeItem } = useCartStore();
+  const { items, isOpen, closeCart, increase, decrease, removeItem, setCartCheckoutMode } = useCartStore();
   const subtotal = getCartSubtotal(items);
   const shipping = subtotal > 5000 || subtotal === 0 ? 0 : 180;
 
@@ -116,7 +116,13 @@ export function CartDrawer() {
                   <span>{formatCurrency(subtotal + shipping)}</span>
                 </div>
               </div>
-              <Link href="/checkout" onClick={closeCart}>
+              <Link
+                href="/checkout"
+                onClick={() => {
+                  setCartCheckoutMode();
+                  closeCart();
+                }}
+              >
                 <Button className="mt-5 w-full" disabled={items.length === 0}>
                   Checkout
                 </Button>

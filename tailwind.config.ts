@@ -9,28 +9,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ivory: "#fbf8f0",
-        pearl: "#fffdf8",
-        champagne: "#e9dcc4",
-        mist: "#f4ede2",
-        forest: "#12352d",
-        moss: "#466052",
-        gold: "#b99a5b",
-        rose: "#b87f74"
+        ivory: "#f8ecd9",
+        pearl: "#fff8ec",
+        champagne: "#ecd1b2",
+        mist: "#f4e4ca",
+        forest: "#5a2e1f",
+        moss: "#8a6a3c",
+        gold: "#b88952",
+        rose: "#8a2f2c"
       },
       fontFamily: {
         serif: ["Cormorant Garamond", "Georgia", "serif"],
         sans: ["Inter", "Avenir Next", "Segoe UI", "sans-serif"]
       },
       boxShadow: {
-        luxury: "0 24px 70px rgba(18, 53, 45, 0.12)",
-        silk: "0 16px 44px rgba(185, 154, 91, 0.16)"
+        luxury: "0 24px 70px rgba(97, 57, 25, 0.14)",
+        silk: "0 16px 44px rgba(184, 137, 82, 0.2)"
       },
       backgroundImage: {
         satin:
-          "radial-gradient(circle at 20% 10%, rgba(255,255,255,0.92), transparent 28%), linear-gradient(135deg, #fffdf8 0%, #efe1c9 46%, #fbf8f0 100%)",
+          "radial-gradient(circle at 18% 12%, rgba(255,255,255,0.92), transparent 28%), linear-gradient(135deg, #fff8ec 0%, #f4dfbd 44%, #f8ecd9 100%)",
         silk:
-          "linear-gradient(125deg, rgba(255,255,255,.85), rgba(233,220,196,.52) 38%, rgba(251,248,240,.9) 72%), radial-gradient(circle at 70% 20%, rgba(185,154,91,.22), transparent 34%)"
+          "linear-gradient(125deg, rgba(255,255,255,.88), rgba(236,209,178,.58) 38%, rgba(248,236,217,.94) 72%), radial-gradient(circle at 70% 20%, rgba(184,137,82,.22), transparent 34%)"
       }
     }
   },

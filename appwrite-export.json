@@ -1,0 +1,183 @@
+{
+  "products": {
+    "tableId": "products",
+    "rows": [
+      {
+        "name": "Test Shirt",
+        "description": "Test product",
+        "fabric": "Cotton",
+        "price": 2000,
+        "discounted_price": 1500,
+        "discountpercent": null,
+        "category": "Men",
+        "stock": 10,
+        "sizes": [
+          "S",
+          "M"
+        ],
+        "images": [],
+        "isactive": false,
+        "isfeatured": false,
+        "sizeinventory": "[{\"size\":\"S\",\"stock\":5},{\"size\":\"M\",\"stock\":5}]",
+        "$id": "6a0a1d8c003a7cea2aaf",
+        "$sequence": "1",
+        "$createdAt": "2026-05-17T19:57:00.680+00:00",
+        "$updatedAt": "2026-05-21T09:40:21.876+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "products"
+      },
+      {
+        "name": "Test Shirt",
+        "description": "Test product",
+        "fabric": "Cotton",
+        "price": 2000,
+        "discounted_price": 1500,
+        "discountpercent": null,
+        "category": "Men",
+        "stock": 10,
+        "sizes": [
+          "S",
+          "M"
+        ],
+        "images": [],
+        "isactive": true,
+        "isfeatured": true,
+        "sizeinventory": "[{\"size\":\"S\",\"stock\":5},{\"size\":\"M\",\"stock\":5}]",
+        "$id": "6a0a1d8c003a3f221ad4",
+        "$sequence": "2",
+        "$createdAt": "2026-05-17T19:57:00.683+00:00",
+        "$updatedAt": "2026-05-18T13:54:54.874+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "products"
+      },
+      {
+        "name": "Test Shirt",
+        "description": "Test product",
+        "fabric": "Cotton",
+        "price": 2000,
+        "discounted_price": 1500,
+        "discountpercent": null,
+        "category": "Men",
+        "stock": 10,
+        "sizes": [
+          "S",
+          "M"
+        ],
+        "images": [],
+        "isactive": true,
+        "isfeatured": false,
+        "sizeinventory": "[{\"size\":\"S\",\"stock\":5},{\"size\":\"M\",\"stock\":5}]",
+        "$id": "6a0a1d92000c8c9fc435",
+        "$sequence": "3",
+        "$createdAt": "2026-05-17T19:57:05.941+00:00",
+        "$updatedAt": "2026-05-17T19:57:05.941+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "products"
+      },
+      {
+        "name": "Test Shirt",
+        "description": "Test product",
+        "fabric": "Cotton",
+        "price": 2000,
+        "discounted_price": 1500,
+        "discountpercent": null,
+        "category": "Men",
+        "stock": 10,
+        "sizes": [
+          "S",
+          "M"
+        ],
+        "images": [],
+        "isactive": true,
+        "isfeatured": true,
+        "sizeinventory": "[{\"size\":\"S\",\"stock\":5},{\"size\":\"M\",\"stock\":5}]",
+        "$id": "6a0a1d92000cd162fcfa",
+        "$sequence": "4",
+        "$createdAt": "2026-05-17T19:57:05.945+00:00",
+        "$updatedAt": "2026-05-18T10:02:45.307+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "products"
+      },
+      {
+        "name": "Blaaade",
+        "description": "Test product",
+        "fabric": null,
+        "price": 1299,
+        "discounted_price": 1200,
+        "discountpercent": null,
+        "category": "Work Wear",
+        "stock": 3,
+        "sizes": [
+          "XS",
+          "S"
+        ],
+        "images": [],
+        "isactive": true,
+        "isfeatured": false,
+        "sizeinventory": "[{\"size\":\"XS\",\"stock\":2},{\"size\":\"S\",\"stock\":1}]",
+        "$id": "6a0ae236003c50a3c5bb",
+        "$sequence": "5",
+        "$createdAt": "2026-05-18T09:56:10.856+00:00",
+        "$updatedAt": "2026-05-18T09:56:10.856+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "products"
+      },
+      {
+        "name": "Blaaade",
+        "description": "Blie",
+        "fabric": null,
+        "price": 1700,
+        "discounted_price": 1500,
+        "discountpercent": null,
+        "category": "Daily Wear",
+        "stock": 12,
+        "sizes": [
+          "S",
+          "M"
+        ],
+        "images": [],
+        "isactive": true,
+        "isfeatured": true,
+        "sizeinventory": "[{\"size\":\"S\",\"stock\":12},{\"size\":\"M\",\"stock\":0}]",
+        "$id": "6a0ae404002505ed74f6",
+        "$sequence": "6",
+        "$createdAt": "2026-05-18T10:03:52.455+00:00",
+        "$updatedAt": "2026-05-21T09:28:23.077+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "products"
+      }
+    ]
+  },
+  "orders": {
+    "tableId": "orders",
+    "rows": [
+      {
+        "customerName": "hafkdf",
+        "customerEmail": "sjadkgha@gmail.com",
+        "customerPhone": "9119293999",
+        "city": "noida",
+        "address": "agv 1",
+        "state": "uttar pradesh",
+        "pincode": "201307",
+        "items": "[{\"productId\":\"6a0ae236003c50a3c5bb\",\"name\":\"Blaaade\",\"size\":\"XS\",\"price\":1200,\"quantity\":1,\"stock\":2}]",
+        "total": 1380,
+        "paymentId": "pay_SskLWScGUQynsQ",
+        "razorpayOrderId": "order_SskKoGmDP8tecN",
+        "paymentStatus": "paid",
+        "$id": "6a116b19002d059e3ae6",
+        "$sequence": "1",
+        "$createdAt": "2026-05-23T08:53:45.892+00:00",
+        "$updatedAt": "2026-05-23T08:53:45.892+00:00",
+        "$permissions": [],
+        "$databaseId": "6a0a12ba002dc6636f1a",
+        "$tableId": "orders"
+      }
+    ]
+  }
+}

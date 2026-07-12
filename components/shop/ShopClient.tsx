@@ -40,7 +40,7 @@ export function ShopClient() {
     <div className="luxury-container py-14">
       <SectionHeader
         eyebrow="Shop"
-        title="The Aureva Collection"
+        title="The KOTA KARIGARI Collection"
         copy="Filter silk-like kurtis, festive edits, and refined daily wear by size, category, and availability."
       />
       <div className="mb-10 rounded-2xl border border-forest/10 bg-pearl/72 p-5 shadow-sm">
@@ -50,19 +50,19 @@ export function ShopClient() {
         <div className="grid gap-4 md:grid-cols-5">
           <label className="grid gap-2 text-sm">
             Size
-            <select value={size} onChange={(e) => setSize(e.target.value as ProductSize | "All")} className="rounded-full border border-forest/10 bg-white px-4 py-3">
+            <select value={size} onChange={(e) => setSize(e.target.value as ProductSize | "All")} className="rounded-full border border-forest/10 bg-pearl/92 px-4 py-3">
               {sizes.map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
           <label className="grid gap-2 text-sm">
             Category
-            <select value={category} onChange={(e) => setCategory(e.target.value as ProductCategory | "All")} className="rounded-full border border-forest/10 bg-white px-4 py-3">
+            <select value={category} onChange={(e) => setCategory(e.target.value as ProductCategory | "All")} className="rounded-full border border-forest/10 bg-pearl/92 px-4 py-3">
               {categories.map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
           <label className="grid gap-2 text-sm">
             Availability
-            <select value={availability} onChange={(e) => setAvailability(e.target.value as "All" | "In stock" | "Out of stock")} className="rounded-full border border-forest/10 bg-white px-4 py-3">
+            <select value={availability} onChange={(e) => setAvailability(e.target.value as "All" | "In stock" | "Out of stock")} className="rounded-full border border-forest/10 bg-pearl/92 px-4 py-3">
               {["All", "In stock", "Out of stock"].map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
@@ -72,7 +72,7 @@ export function ShopClient() {
           </label>
           <label className="grid gap-2 text-sm">
             Sort
-            <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)} className="rounded-full border border-forest/10 bg-white px-4 py-3">
+            <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)} className="rounded-full border border-forest/10 bg-pearl/92 px-4 py-3">
               <option value="newest">Newest</option>
               <option value="price-asc">Price Low to High</option>
               <option value="price-desc">Price High to Low</option>

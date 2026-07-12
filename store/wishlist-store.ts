@@ -56,7 +56,7 @@ export const useWishlistStore = create<WishlistState>()(
         ),
     }),
     {
-      name: "aureva-wishlist",
+      name: "KOTA KARIGARI-wishlist",
     }
   )
 );

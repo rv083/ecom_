@@ -1,19 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CreditCard, Gift, Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/Button";
-import { getCartSubtotal, useCartStore } from "@/store/cart-store";
+import {
+  getCartSubtotal,
+  getStoredBuyNowItem,
+  useCartStore
+} from "@/store/cart-store";
 import { formatCurrency } from "@/utils/format";
 
 const inputClass =
-  "min-h-12 rounded-full border border-forest/10 bg-white px-5 outline-none transition focus:border-gold";
+  "min-h-12 rounded-full border border-forest/10 bg-pearl/92 px-5 outline-none transition focus:border-gold";
 
 export function CheckoutClient() {
+  const searchParams = useSearchParams();
   const items = useCartStore((state) => state.items);
+  const buyNowItem = useCartStore((state) => state.buyNowItem);
+  const clearBuyNowItem = useCartStore((state) => state.clearBuyNowItem);
+  const checkoutMode = useCartStore((state) => state.checkoutMode);
+  const [storedBuyNowItem, setStoredBuyNowItem] = useState<ReturnType<
+    typeof getStoredBuyNowItem
+  >>(null);
+  const [buyNowReady, setBuyNowReady] = useState(false);
 
-  const subtotal = getCartSubtotal(items);
+  const isBuyNowCheckout =
+    searchParams.get("mode") === "buy-now" || checkoutMode === "buyNow";
+
+  const checkoutItems = useMemo(
+    () =>
+      isBuyNowCheckout
+        ? buyNowItem
+          ? [buyNowItem]
+          : storedBuyNowItem
+            ? [storedBuyNowItem]
+            : []
+        : items,
+    [buyNowItem, isBuyNowCheckout, items, storedBuyNowItem]
+  );
+
+  const subtotal = getCartSubtotal(checkoutItems);
 
   const shipping = subtotal > 5000 || subtotal === 0 ? 0 : 180;
 
@@ -30,23 +59,41 @@ export function CheckoutClient() {
   const [stateName, setStateName] = useState("");
   const [pincode, setPincode] = useState("");
 
+  useEffect(() => {
+    if (isBuyNowCheckout) {
+      const item = buyNowItem ?? getStoredBuyNowItem();
+      setStoredBuyNowItem(item);
+      // Set ready immediately after state update is scheduled
+      setBuyNowReady(true);
+      return;
+    }
+    setBuyNowReady(false);
+    setStoredBuyNowItem(null);
+  }, [buyNowItem, isBuyNowCheckout]);
+
+  
+
   const handlePayment = async () => {
     try {
       if (
-        !customerName ||
-        !customerEmail ||
-        !customerPhone ||
-        !city ||
-        !address ||
-        !stateName ||
-        !pincode
-      ) {
-        alert("Please fill all shipping details");
+  !customerName ||
+  !customerEmail ||
+  !customerPhone ||
+  !city ||
+  !address ||
+  !stateName ||
+  !pincode
+) {
+  alert("Please fill all shipping details");
+  return;
+}
 
-        return;
-      }
+if (!/^\d{10}$/.test(customerPhone)) {
+  alert("Please enter a valid 10-digit phone number");
+  return;
+}
 
-      setLoading(true);
+setLoading(true);
 
       const response = await fetch("/api/create-order", {
         method: "POST",
@@ -98,7 +145,7 @@ export function CheckoutClient() {
           stateName,
           pincode,
 
-          items,
+          items: checkoutItems,
 
           total: totalPrice,
         }),
@@ -107,11 +154,10 @@ export function CheckoutClient() {
 
     const data = await verifyResponse.json();
 
-    if (data.success) {
-      alert("Order placed successfully!");
-
-      window.location.href = "/success";
-    } else {
+if (data.success) {
+  clearBuyNowItem();
+  window.location.href = `/success?orderId=${data.orderId}`;
+} else {
       alert("Payment verification failed");
     }
   } catch (error) {
@@ -135,7 +181,7 @@ export function CheckoutClient() {
         },
 
         theme: {
-          color: "#1C352D",
+          color: "#4F2432",
         },
       };
 
@@ -185,11 +231,15 @@ export function CheckoutClient() {
               />
 
               <input
-                className={inputClass}
-                placeholder="Phone number"
-                value={customerPhone}
-                onChange={(e) => setCustomerPhone(e.target.value)}
-              />
+  className={inputClass}
+  placeholder="Phone number"
+  value={customerPhone}
+  maxLength={10}
+  inputMode="numeric"
+  onChange={(e) =>
+    setCustomerPhone(e.target.value.replace(/\D/g, "").slice(0, 10))
+  }
+/>
 
               <input
                 className={inputClass}
@@ -248,25 +298,47 @@ export function CheckoutClient() {
           </h2>
 
           <div className="mt-5 grid gap-4">
-            {items.length === 0 ? (
+            {isBuyNowCheckout && !buyNowReady ? (
+              <p className="text-sm text-pearl/70">
+                Loading selected item...
+              </p>
+            ) : checkoutItems.length === 0 ? (
               <p className="text-sm text-pearl/70">
                 No items selected yet.
               </p>
             ) : (
-              items.map((item) => (
-                <div
-                  key={`${item.productId}-${item.size}`}
-                  className="flex justify-between gap-3 text-sm"
-                >
-                  <span>
-                    {item.name} x {item.quantity}
-                  </span>
+              checkoutItems.map((item) => (
+  <div
+    key={`${item.productId}-${item.size}`}
+    className="flex items-center justify-between gap-3 text-sm"
+  >
+    <div className="flex items-center gap-3">
+      <Link href={`/products/${item.productId}`} className="shrink-0">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="h-14 w-14 rounded-xl object-cover"
+        />
+      </Link>
 
-                  <span>
-                    {formatCurrency(item.price * item.quantity)}
-                  </span>
-                </div>
-              ))
+      <div>
+        <Link
+          href={`/products/${item.productId}`}
+          className="font-medium text-pearl hover:text-gold hover:underline"
+        >
+          {item.name}
+        </Link>
+        <p className="text-xs text-pearl/60">
+          Size: {item.size} · Qty: {item.quantity}
+        </p>
+      </div>
+    </div>
+
+    <span className="whitespace-nowrap">
+      {formatCurrency(item.price * item.quantity)}
+    </span>
+  </div>
+))
             )}
           </div>
 
@@ -311,7 +383,7 @@ export function CheckoutClient() {
 
           <Button
             onClick={handlePayment}
-            disabled={items.length === 0 || loading}
+            disabled={(isBuyNowCheckout && !buyNowReady) || checkoutItems.length === 0 || loading}
             className="mt-7 w-full bg-pearl text-forest hover:bg-champagne"
           >
             {loading ? (

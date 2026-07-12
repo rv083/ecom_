@@ -3,9 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Eye, Heart, Minus, Plus, ShoppingBag, X, Zap } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { useCartStore } from "@/store/cart-store";
+import { createCartItem, saveBuyNowItem, useCartStore } from "@/store/cart-store";
 import type { Product, ProductSize } from "@/types/product";
 import { formatCurrency } from "@/utils/format";
 import { ImageCarousel } from "./ImageCarousel";
@@ -16,7 +17,9 @@ interface ProductCardProps {
 }
 
 function ProductPreviewModal({ product, onClose }: { product: Product; onClose: () => void }) {
+  const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
+  const setBuyNowItem = useCartStore((state) => state.setBuyNowItem);
   const [index, setIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const [fading, setFading] = useState(false);
@@ -43,6 +46,17 @@ function ProductPreviewModal({ product, onClose }: { product: Product; onClose: 
   const addToCart = () => {
     addItem(product, size, quantity);
     onClose();
+  };
+
+  const buyNow = () => {
+    const item = createCartItem(product, size, quantity);
+
+    if (!item) return;
+
+    saveBuyNowItem(item);
+    setBuyNowItem(product, size, quantity);
+    onClose();
+    router.push("/checkout?mode=buy-now");
   };
 
   return (
@@ -151,7 +165,7 @@ function ProductPreviewModal({ product, onClose }: { product: Product; onClose: 
                       className={`h-10 min-w-12 rounded-full border px-4 text-sm font-semibold transition ${
                         item === size
                           ? "border-forest bg-forest text-pearl"
-                          : "border-forest/12 bg-white text-forest hover:border-gold"
+                          : "border-forest/12 bg-pearl text-forest hover:border-gold"
                       }`}
                     >
                       {item}
@@ -167,7 +181,7 @@ function ProductPreviewModal({ product, onClose }: { product: Product; onClose: 
 
               {/* Quantity */}
               <div className="mt-4 flex items-center gap-3">
-                <div className="flex items-center rounded-full border border-forest/10 bg-white">
+                <div className="flex items-center rounded-full border border-forest/10 bg-pearl">
                   <button className="p-2.5" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
                     <Minus size={14} />
                   </button>
@@ -188,8 +202,7 @@ function ProductPreviewModal({ product, onClose }: { product: Product; onClose: 
               <Button
                 disabled={unavailable}
                 variant="secondary"
-                onClick={addToCart}
-                href="/checkout"
+                onClick={buyNow}
               >
                 <Zap size={16} /> Buy now
               </Button>
