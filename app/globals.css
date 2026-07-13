@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --ivory: #fbf8f0;
-  --pearl: #fffdf8;
-  --champagne: #e9dcc4;
-  --forest: #12352d;
+  --ivory: #f8ecd9;
+  --pearl: #fff8ec;
+  --champagne: #ecd1b2;
+  --forest: #5a2e1f;
 }
 
 * {
@@ -21,14 +21,16 @@ body {
   min-height: 100vh;
   color: var(--forest);
   background:
-    linear-gradient(120deg, rgba(255, 253, 248, 0.96), rgba(244, 237, 226, 0.92)),
+    radial-gradient(circle at top left, rgba(212, 176, 114, 0.18), transparent 26%),
+    radial-gradient(circle at 85% 12%, rgba(135, 42, 36, 0.09), transparent 22%),
+    linear-gradient(135deg, rgba(255, 248, 236, 0.98), rgba(248, 236, 217, 0.94)),
     var(--ivory);
   font-family: Inter, "Avenir Next", "Segoe UI", sans-serif;
 }
 
 ::selection {
-  background: #12352d;
-  color: #fffdf8;
+  background: #8a2f2c;
+  color: #fff8ec;
 }
 
 .luxury-container {
@@ -38,9 +40,9 @@ body {
 
 .satin-panel {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(233, 220, 196, 0.42)),
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 34%);
-  box-shadow: 0 24px 70px rgba(18, 53, 45, 0.1);
+    linear-gradient(145deg, rgba(255, 250, 240, 0.96), rgba(244, 225, 190, 0.62) 56%, rgba(248, 236, 217, 0.95)),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.92), transparent 34%);
+  box-shadow: 0 24px 70px rgba(97, 57, 25, 0.12);
 }
 
 .text-balance {

@@ -11,10 +11,11 @@ import { BannerSlider } from "./BannerSlider";
 export function Hero() {
   return (
   <>
-    <div className="mt-05">
-  <BannerSlider />
-</div>
+    <BannerSlider />
     <section className="relative overflow-hidden bg-satin">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/45 to-transparent" />
+      <div className="pointer-events-none absolute -left-16 top-24 h-64 w-64 rounded-full bg-champagne/35 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-16 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
       <div className="luxury-container grid min-h-[calc(100vh-80px)] items-center gap-12 py-12 md:grid-cols-[0.95fr_1.05fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -27,9 +28,9 @@ export function Hero() {
           </p>
           <div className="flex flex-col">
             <h1 className="max-w-3xl font-serif text-6xl leading-[0.95] text-forest md:text-8xl">
-              AURÉVA
+              KOTA KARIGARI
             </h1>
-            <p className="text-2xl font-medium text-forest tracking-[0.07em] mt-1">fashion</p>
+            <p className="mt-1 bg-gradient-to-r from-forest via-rose to-gold bg-clip-text text-2xl font-medium tracking-[0.07em] text-transparent">fashion</p>
           </div>
           <p className="mt-6 max-w-xl text-lg leading-8 text-moss">
             A contemporary ethnic and Indo-western fashion brand offering elegant, comfort-driven apparel in breathable fabrics like cotton, Kota doriya and Mal cotton, blending traditional Indian craftsmanship with modern style.
@@ -49,17 +50,17 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="relative min-h-[420px] md:min-h-[620px]"
         >
-          <div className="absolute right-0 top-0 h-[86%] w-[74%] overflow-hidden rounded-[2rem] shadow-luxury">
+          <div className="absolute right-0 top-0 h-[86%] w-[74%] overflow-hidden rounded-[2rem] border border-white/50 shadow-luxury">
             <img
               src="/pics/IMG-20260512-WA0295.jpg"
-              alt="Aureva ivory ethnic wear"
+              alt="KOTA KARIGARI ivory ethnic wear"
               className="h-full w-full object-cover object-top"
             />
           </div>
           <div className="absolute bottom-0 left-0 h-[48%] w-[52%] overflow-hidden rounded-[1.5rem] border-8 border-pearl shadow-silk">
             <img
               src="/pics/pic_1.jpeg"
-              alt="Aureva festive silk detail"
+              alt="KOTA KARIGARI festive silk detail"
               className="h-full w-full object-cover object-top"
             />
           </div>

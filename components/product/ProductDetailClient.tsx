@@ -1,10 +1,11 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingBag, Zap } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
-import { useCartStore } from "@/store/cart-store";
+import { createCartItem, saveBuyNowItem, useCartStore } from "@/store/cart-store";
 import type { Product, ProductSize } from "@/types/product";
 import { formatCurrency } from "@/utils/format";
 
@@ -14,6 +15,7 @@ interface ProductDetailClientProps {
 }
 
 export function ProductDetailClient({ product, related }: ProductDetailClientProps) {
+  const router = useRouter();
   const [index, setIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const [fading, setFading] = useState(false);
@@ -21,12 +23,31 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
   const [size, setSize] = useState<ProductSize>(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
+  const setBuyNowItem = useCartStore((state) => state.setBuyNowItem);
   const currentPrice = product.discountPrice ?? product.price;
   const sizeStock =
     product.sizeInventory.find((item) => item.size === size)?.stock ?? product.stock;
   const unavailable = product.stock <= 0 || sizeStock <= 0;
 
   const addToCart = () => addItem(product, size, quantity);
+  const buyNow = () => {
+    const item = createCartItem(product, size, quantity);
+
+    if (!item) {
+      alert("Cannot proceed: Product out of stock for selected size");
+      return;
+    }
+
+    // Save to storage (both sessionStorage and localStorage)
+    saveBuyNowItem(item);
+    // Update Zustand store
+    setBuyNowItem(product, size, quantity);
+    
+    // Use a small setTimeout to ensure state is fully persisted before navigation
+    setTimeout(() => {
+      router.push("/checkout?mode=buy-now");
+    }, 100);
+  };
 
   const switchImage = (i: number) => {
     if (i === index) return;
@@ -148,7 +169,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
                   className={`h-12 min-w-16 rounded-full border px-5 font-semibold transition ${
                     item === size
                       ? "border-forest bg-forest text-pearl"
-                      : "border-forest/12 bg-white text-forest hover:border-gold"
+                      : "border-forest/12 bg-pearl text-forest hover:border-gold"
                   }`}
                 >
                   {item}
@@ -157,7 +178,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
             </div>
           </div>
           <div className="mt-7 flex items-center gap-4">
-            <div className="flex items-center rounded-full border border-forest/10 bg-white">
+            <div className="flex items-center rounded-full border border-forest/10 bg-pearl">
               <button className="p-3" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
                 <Minus size={16} />
               </button>
@@ -178,8 +199,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
             <Button
               disabled={unavailable}
               variant="secondary"
-              onClick={addToCart}
-              href="/checkout"
+              onClick={buyNow}
             >
               <Zap size={17} /> Buy now
             </Button>

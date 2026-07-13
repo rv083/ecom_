@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { ID } from "node-appwrite";
 
 import { databases } from "@/lib/appwrite-server";
+import { generateMockShipment } from "@/lib/mockShipping";
 
 export async function POST(req: Request) {
   try {
@@ -28,19 +29,14 @@ export async function POST(req: Request) {
       total,
     } = body;
 
-    const bodyData =
-      razorpay_order_id + "|" + razorpay_payment_id;
+    const bodyData = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
-      .createHmac(
-        "sha256",
-        process.env.RAZORPAY_KEY_SECRET!
-      )
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
       .update(bodyData.toString())
       .digest("hex");
 
-    const isAuthentic =
-      expectedSignature === razorpay_signature;
+    const isAuthentic = expectedSignature === razorpay_signature;
 
     if (!isAuthentic) {
       return NextResponse.json(
@@ -53,10 +49,16 @@ export async function POST(req: Request) {
       );
     }
 
-    await databases.createDocument(
+    const newOrderId = ID.unique();
+
+    // Simulate creating a shipment + assigning a courier/AWB,
+    // same shape as what Shiprocket's real API would return.
+    const { courierName, awbCode } = generateMockShipment(newOrderId);
+
+    const order = await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID!,
       process.env.APPWRITE_ORDERS_COLLECTION_ID!,
-      ID.unique(),
+      newOrderId,
       {
         customerName,
         customerEmail,
@@ -76,11 +78,15 @@ export async function POST(req: Request) {
         razorpayOrderId: razorpay_order_id,
 
         paymentStatus: "paid",
+
+        courierName,
+        awbCode,
       }
     );
 
     return NextResponse.json({
       success: true,
+      orderId: order.$id,
     });
   } catch (error) {
     console.log(error);

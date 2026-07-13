@@ -21,7 +21,7 @@ export function FeaturedProducts() {
     <section className="bg-mist/70 py-20">
       <div className="luxury-container">
         <SectionHeader
-          eyebrow="Aureva selection"
+          eyebrow="KOTA KARIGARI selection"
           title="Featured Products"
           copy="Soft textures, refined colors, and shapes made for graceful movement."
         />

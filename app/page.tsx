@@ -55,7 +55,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">
               Private notes
             </p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl">Join the Aureva list</h2>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl">Join the KOTA KARIGARI list</h2>
             <p className="mt-3 max-w-xl text-moss">
               Receive collection previews, styling edits, and first access to limited drops.
             </p>

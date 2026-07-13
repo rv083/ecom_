@@ -6,7 +6,7 @@ import { getCartSubtotal, useCartStore } from "@/store/cart-store";
 import { formatCurrency } from "@/utils/format";
 
 export function CartPageClient() {
-  const { items, increase, decrease, removeItem } = useCartStore();
+  const { items, increase, decrease, removeItem, setCartCheckoutMode } = useCartStore();
   const subtotal = getCartSubtotal(items);
   const shipping = subtotal > 5000 || subtotal === 0 ? 0 : 180;
 
@@ -47,7 +47,13 @@ export function CartPageClient() {
               <div className="flex justify-between"><span>Shipping</span><span>{shipping === 0 ? "Complimentary" : formatCurrency(shipping)}</span></div>
               <div className="flex justify-between border-t border-pearl/15 pt-4 text-base font-semibold"><span>Total</span><span>{formatCurrency(subtotal + shipping)}</span></div>
             </div>
-            <Button href="/checkout" className="mt-7 w-full bg-pearl text-forest hover:bg-champagne">Checkout</Button>
+            <Button
+              href="/checkout"
+              onClick={setCartCheckoutMode}
+              className="mt-7 w-full bg-pearl text-forest hover:bg-champagne"
+            >
+              Checkout
+            </Button>
           </aside>
         </div>
       )}
