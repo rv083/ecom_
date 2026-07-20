@@ -15,7 +15,7 @@ export function FeaturedProducts() {
     });
   }, []);
 
-  const featured = products.filter((product) => product.featured).slice(0, 4);
+  const featured = products.filter((product) => product.featured).slice(0, 12);
 
   return (
     <section className="bg-mist/70 py-20">
