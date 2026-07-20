@@ -5,6 +5,7 @@ import { CartNotice } from "@/components/cart/CartNotice";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 
 export const metadata: Metadata = {
   title: "KOTA KARIGARI | Sleek. Simple. KOTA KARIGARI.",
@@ -20,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <CartDrawer />
-        <CartNotice />
+        <SmoothScrollProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <CartDrawer />
+          <CartNotice />
+        </SmoothScrollProvider>
         <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       </body>
     </html>
