@@ -7,17 +7,17 @@ import { motion, AnimatePresence } from "framer-motion";
 const desktopBanners = [
   {
     id: 1,
-    image: "/banners/desktop/banner1.jpg",
+    image: "/banners/desktop/banner1.png",
     alt: "KOTA KARIGARI new collection",
   },
   {
     id: 2,
-    image: "/banners/desktop/banner2.jpg",
+    image: "/banners/desktop/banner2.png",
     alt: "KOTA KARIGARI festive edit",
   },
   {
     id: 3,
-    image: "/banners/desktop/banner3.jpg",
+    image: "/banners/desktop/banner3.png",
     alt: "KOTA KARIGARI daily wear",
   },
 ];
@@ -25,17 +25,17 @@ const desktopBanners = [
 const mobileBanners = [
   {
     id: 1,
-    image: "/banners/mobile/banner1.jpg",
+    image: "/banners/mobile/banner1.png",
     alt: "KOTA KARIGARI new collection",
   },
   {
     id: 2,
-    image: "/banners/mobile/banner2.jpg",
+    image: "/banners/mobile/banner2.png",
     alt: "KOTA KARIGARI festive edit",
   },
   {
     id: 3,
-    image: "/banners/mobile/banner3.jpg",
+    image: "/banners/mobile/banner3.png",
     alt: "KOTA KARIGARI daily wear",
   },
 ];
